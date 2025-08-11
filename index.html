@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Game Toolkit</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+</head>
+<body>
+  <header class="app-header">
+    <h1>Game Toolkit</h1>
+  </header>
+
+  <main class="container">
+    <!-- Home / Main Menu -->
+    <section id="home" class="view active">
+      <div class="hero card">
+        <div class="hero-content">
+          <h2 class="hero-title">Manage game files and QR codes fast</h2>
+          <p class="hero-sub">Create professional PDFs and branded QR codes, optimized for mobile workflow.</p>
+        </div>
+      </div>
+
+      <div class="actions-grid">
+        <article class="action-card" data-target="orders" tabindex="0" role="button" aria-label="Create Orders">
+          <div class="action-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M9 11h6M9 15h6" stroke-linecap="round"/>
+              <rect x="4" y="3" width="16" height="18" rx="3"/>
+              <path d="M8 3v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V3"/>
+            </svg>
+          </div>
+          <div class="action-body">
+            <h3>Create Orders</h3>
+            <p>Build and manage order entries. Coming soon.</p>
+          </div>
+        </article>
+
+        <article class="action-card" data-target="game" tabindex="0" role="button" aria-label="Create Game Files PDF">
+          <div class="action-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <path d="M14 2v6h6"/>
+              <path d="M8 13h8M8 17h5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="action-body">
+            <h3>Create Game Files</h3>
+            <p>Generate clean PDF with title, size and clickable download links.</p>
+          </div>
+        </article>
+
+        <article class="action-card" data-target="qr" tabindex="0" role="button" aria-label="Create QR Code">
+          <div class="action-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+              <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+              <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+              <path d="M14 14h3v3M17 17h4M17 14h4M14 17h3M20 20h1" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="action-body">
+            <h3>Create QR Code</h3>
+            <p>Fixed-size 186×230 card with name and border. Download or upload.</p>
+          </div>
+        </article>
+        <article class="action-card" data-target="mergeFiles" tabindex="0" role="button" aria-label="Merge Files">
+          <div class="action-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.89 22 5.99 22H18C19.1 22 20 21.1 20 20V8L14 2Z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 2V8H20" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 13H8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 17H8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 9H8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="action-body">
+            <h3>Merge Files</h3>
+            <p>Combine multiple PDF files into one document</p>
+          </div>
+        </article>
+      </div>
+
+      <footer class="app-footer">
+        <p>Tip: You can paste multiple links in Game Files, one per line. The PDF will make them clickable.</p>
+      </footer>
+    </section>
+
+    <!-- Create Game Files -->
+    <section id="gameFilesView" class="view">
+      <button class="back" data-back>← Back</button>
+      <h2>Create Game File (PDF)</h2>
+
+      <form id="gameForm" class="card" autocomplete="off">
+        <label for="gameName">Game name</label>
+        <input id="gameName" name="gameName" type="text" placeholder="e.g., Euro Truck Simulator 2" required />
+
+        <label for="gameSize">Game size</label>
+        <input id="gameSize" name="gameSize" type="text" placeholder="e.g., 7.2 GB" />
+
+        <label for="gameLinks">Links (one per line)</label>
+        <textarea id="gameLinks" name="gameLinks" rows="7" placeholder="Paste each link on a new line"></textarea>
+
+        <div class="actions">
+          <button id="btnGeneratePdf" class="primary" type="button">Generate PDF</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- QR Code Generator -->
+    <section id="qrView" class="view">
+      <button class="back" data-back>← Back</button>
+      <h2>Create QR Code</h2>
+
+      <form id="qrForm" class="card" autocomplete="off">
+        <label for="qrGameName">Game name</label>
+        <input id="qrGameName" name="qrGameName" type="text"        maxlength="18" 
+        placeholder="e.g., Euro Truck Simulator 2" required />
+
+        <label for="qrLink">Single link</label>
+        <input id="qrLink" name="qrLink" type="url" placeholder="https://example.com/download" required />
+
+        <div class="actions">
+          <button id="btnGenerateQr" class="primary" type="button">Generate QR Code</button>
+        </div>
+      </form>
+
+      <div id="qrResult" class="qr-result hidden">
+        <div class="qr-card">
+          <div class="qr-frame">
+            <div id="qrCanvas" class="qr-canvas"></div>
+            <div class="qr-divider"></div>
+            <div id="qrName" class="qr-name"></div>
+          </div>
+        </div>
+        <div class="qr-actions actions">
+          <button id="btnDownloadQr" class="secondary" type="button">Download PNG</button>
+          <button id="btnUploadQr" class="primary" type="button">Upload to DB</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Orders (placeholder) -->
+    <section id="ordersView" class="view">
+      <button class="back" data-back>← Back</button>
+      <h2>Create Orders</h2>
+      
+      <div class="order-type-selector card">
+        <h3>Select Order Type</h3>
+        <div class="order-type-buttons">
+          <button id="btnSingleOrder" class="order-type-btn active" data-type="single">Single Order</button>
+          <button id="btnPackOrder" class="order-type-btn" data-type="pack">10 Pack Order</button>
+          <button id="btnBigPackOrder" class="order-type-btn" data-type="bigpack">Big Pack Order</button>
+        </div>
+      </div>
+
+      <!-- Single Order Form -->
+      <div id="singleOrderForm" class="order-form card">
+        <h3>Single Order</h3>
+        
+        <!-- First Section -->
+        <div class="order-section">
+          <h4>Section 1</h4>
+          <div class="pdf-upload-section">
+            <label for="singlePdfUpload1">Upload PDF 1</label>
+            <input type="file" id="singlePdfUpload1" accept=".pdf" />
+          </div>
+          
+          <div class="game-selection">
+            <h5>Select Games (4 required)</h5>
+            <div class="game-dropdowns">
+              <div class="game-dropdown-item">
+                <label>Game 1</label>
+                <div class="searchable-dropdown">
+                  <input type="text" class="dropdown-search" placeholder="Search games..." />
+                  <div class="dropdown-options hidden">
+                    <!-- Options will be populated from DB -->
+                  </div>
+                  <div class="selected-game">Select a game</div>
+                </div>
+              </div>
+              <div class="game-dropdown-item">
+                <label>Game 2</label>
+                <div class="searchable-dropdown">
+                  <input type="text" class="dropdown-search" placeholder="Search games..." />
+                  <div class="dropdown-options hidden">
+                    <!-- Options will be populated from DB -->
+                  </div>
+                  <div class="selected-game">Select a game</div>
+                </div>
+              </div>
+              <div class="game-dropdown-item">
+                <label>Game 3</label>
+                <div class="searchable-dropdown">
+                  <input type="text" class="dropdown-search" placeholder="Search games..." />
+                  <div class="dropdown-options hidden">
+                    <!-- Options will be populated from DB -->
+                  </div>
+                  <div class="selected-game">Select a game</div>
+                </div>
+              </div>
+              <div class="game-dropdown-item">
+                <label>Game 4</label>
+                <div class="searchable-dropdown">
+                  <input type="text" class="dropdown-search" placeholder="Search games..." />
+                  <div class="dropdown-options hidden">
+                    <!-- Options will be populated from DB -->
+                  </div>
+                  <div class="selected-game">Select a game</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second Section -->
+        <div class="order-section">
+          <h4>Section 2</h4>
+          <div class="pdf-upload-section">
+            <label for="singlePdfUpload2">Upload PDF 2</label>
+            <input type="file" id="singlePdfUpload2" accept=".pdf" />
+          </div>
+          
+          <div class="game-selection">
+            <h5>Select Games (4 required)</h5>
+            <div class="game-dropdowns">
+              <div class="game-dropdown-item">
+                <label>Game 5</label>
+                <div class="searchable-dropdown">
+                  <input type="text" class="dropdown-search" placeholder="Search games..." />
+                  <div class="dropdown-options hidden">
+                    <!-- Options will be populated from DB -->
+                  </div>
+                  <div class="selected-game">Select a game</div>
+                </div>
+              </div>
+              <div class="game-dropdown-item">
+                <label>Game 6</label>
+                <div class="searchable-dropdown">
+                  <input type="text" class="dropdown-search" placeholder="Search games..." />
+                  <div class="dropdown-options hidden">
+                    <!-- Options will be populated from DB -->
+                  </div>
+                  <div class="selected-game">Select a game</div>
+                </div>
+              </div>
+              <div class="game-dropdown-item">
+                <label>Game 7</label>
+                <div class="searchable-dropdown">
+                  <input type="text" class="dropdown-search" placeholder="Search games..." />
+                  <div class="dropdown-options hidden">
+                    <!-- Options will be populated from DB -->
+                  </div>
+                  <div class="selected-game">Select a game</div>
+                </div>
+              </div>
+              <div class="game-dropdown-item">
+                <label>Game 8</label>
+                <div class="searchable-dropdown">
+                  <input type="text" class="dropdown-search" placeholder="Search games..." />
+                  <div class="dropdown-options hidden">
+                    <!-- Options will be populated from DB -->
+                  </div>
+                  <div class="selected-game">Select a game</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <button id="btnGenerateSingleOrder" class="primary center-btn">Generate Order</button>
+      </div>
+
+      <!-- 10 Pack Order Form -->
+      <div id="packOrderForm" class="order-form card hidden">
+        <h3>10 Pack Order</h3>
+        <div class="pdf-upload-section">
+          <label for="packPdfUpload">Upload PDF</label>
+          <input type="file" id="packPdfUpload" accept=".pdf" />
+        </div>
+        
+        <div class="game-selection">
+          <h4>Select Games (12 required)</h4>
+          <div class="game-dropdowns pack-dropdowns">
+            <!-- 12 dropdowns will be generated dynamically -->
+          </div>
+        </div>
+        
+        <button id="btnGeneratePackOrder" class="primary center-btn">Generate Order</button>
+      </div>
+
+      <!-- Big Pack Order Form -->
+      <div id="bigPackOrderForm" class="order-form card hidden">
+        <h3>Big Pack Order</h3>
+        <div class="pdf-upload-section">
+          <label for="bigPackPdfUpload">Upload PDF</label>
+          <input type="file" id="bigPackPdfUpload" accept=".pdf" />
+        </div>
+        
+        <div class="game-selection">
+          <h4>Select Games (28 required)</h4>
+          <div class="game-dropdowns big-pack-dropdowns">
+            <!-- 28 dropdowns will be generated dynamically -->
+          </div>
+        </div>
+        
+        <button id="btnGenerateBigPackOrder" class="primary center-btn">Generate Order</button>
+      </div>
+    </section>
+
+    <!-- Merge Files Section -->
+    <section id="mergeFilesView" class="view">
+      <button class="back" onclick="showView('main')">← Back to Main</button>
+      <h2>Merge PDF Files</h2>
+      
+      <div class="merge-section card">
+        <h3>Select PDF Files to Merge</h3>
+        <p>Upload multiple PDF files and arrange them in the order you want to merge.</p>
+        
+        <div class="file-upload-area">
+          <input type="file" id="pdfFileInput" accept=".pdf" multiple />
+          <label for="pdfFileInput" class="file-upload-label">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Choose PDF Files
+          </label>
+        </div>
+        
+        <div class="file-list-container">
+          <h4>Selected Files (<span id="fileCount">0</span>)</h4>
+          <div id="fileList" class="file-list">
+            <!-- Files will be listed here -->
+          </div>
+        </div>
+        
+        <div class="merge-actions">
+          <button id="btnMergePdfs" class="primary" disabled>Merge PDFs</button>
+          <button id="btnClearFiles" class="secondary">Clear All</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="config.js"></script>
+  <script>
+    // Configure PDF.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  </script>
+  <!-- App -->
+  <script src="script.js"></script>
+</body>
+<!-- Made for mobile first. -->
+</html>
+
+
